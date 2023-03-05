@@ -11,6 +11,8 @@ class ShopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // only changeNotification provider takes builder method for which we need to pass a context
+    // but whenever we are creating the provider for the first time it is recommended to use create with build context
     return ChangeNotifierProvider(
       create: (context) => Products(),
       child: MaterialApp(
@@ -20,7 +22,7 @@ class ShopApp extends StatelessWidget {
               .copyWith(secondary: Colors.deepOrange),
           fontFamily: 'Lato',
         ),
-        home: ProductOverviewScreen(),
+        home: const ProductOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName: (_) => const ProductDetailScreen()
         },
