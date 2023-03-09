@@ -19,7 +19,7 @@ class OrderItemTile extends StatelessWidget {
               DateFormat('dd MM yyyy').format(order.dateTime),
             ),
             trailing: IconButton(
-              icon: Icon(Icons.expand_more),
+              icon: const Icon(Icons.expand_more),
               onPressed: () {},
             ),
           )
