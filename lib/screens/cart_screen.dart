@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/providers/cart.dart';
+import 'package:shop_app/widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -11,7 +10,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final total = Provider.of<Cart>(context).totalAmount;
+    final cart = Provider.of<Cart>(context);
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -35,7 +34,7 @@ class CartScreen extends StatelessWidget {
                   const Spacer(),
                   Chip(
                     label: Text(
-                      '$total',
+                      '${cart.totalAmount}',
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimary),
                     ),
@@ -52,7 +51,23 @@ class CartScreen extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: cart.itemCount,
+              itemBuilder: (context, index) {
+                final item = cart.items.values.toList()[index];
+                return CartItemTile(
+                    id: item.id,
+                    price: item.price,
+                    quantity: item.quantity,
+                    title: item.title);
+              },
+            ),
+          ),
         ],
       ),
     ));

@@ -32,6 +32,8 @@ class Cart with ChangeNotifier {
       },
     );
 
+    notifyListeners();
+
     return total;
   }
 
@@ -57,5 +59,7 @@ class Cart with ChangeNotifier {
         ),
       );
     }
+
+    notifyListeners();
   }
 }
