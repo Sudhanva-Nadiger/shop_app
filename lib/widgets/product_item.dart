@@ -33,6 +33,7 @@ class ProductItem extends StatelessWidget {
             ),
             onPressed: () {
               cart.addItem(product.id, product.price, product.title);
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   behavior: SnackBarBehavior.floating,
@@ -44,6 +45,10 @@ class ProductItem extends StatelessWidget {
                       Theme.of(context).snackBarTheme.backgroundColor,
                   elevation: 3,
                   dismissDirection: DismissDirection.horizontal,
+                  action: SnackBarAction(
+                    label: 'Undo',
+                    onPressed: () => cart.revertProductAddition(product.id),
+                  ),
                 ),
               );
             },

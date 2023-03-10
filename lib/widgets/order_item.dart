@@ -36,28 +36,31 @@ class _OrderItemTileState extends State<OrderItemTile> {
             ),
           ),
           if (_isExpanded)
-            SizedBox(
-              height: min(widget.order.products.length * 20.0 + 10, 180),
-              child: ListView.builder(
-                itemCount: widget.order.products.length,
-                itemBuilder: (context, index) => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.order.products[index].title,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: min(widget.order.products.length * 20.0 + 10, 180),
+                child: ListView.builder(
+                  itemCount: widget.order.products.length,
+                  itemBuilder: (context, index) => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.order.products[index].title,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '\$${widget.order.products[index].quantity}x \$${widget.order.products[index].price}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey,
+                      Text(
+                        '\$${widget.order.products[index].quantity}x \$${widget.order.products[index].price}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             )
