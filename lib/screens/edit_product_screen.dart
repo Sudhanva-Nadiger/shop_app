@@ -32,7 +32,7 @@ class _EditProductPageState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
-    final isValid = _form.currentState?.validate();
+    bool? isValid = _form.currentState?.validate();
     if (isValid == null || !isValid) {
       return;
     }
@@ -95,6 +95,21 @@ class _EditProductPageState extends State<EditProductScreen> {
                     imageUrl: _editedProduct.imageUrl,
                   );
                 },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please provide the price';
+                  }
+
+                  if (double.tryParse(value) == null) {
+                    return 'Please provide a valid number';
+                  }
+
+                  if (double.tryParse(value)! <= 0) {
+                    return 'Please enter a number greater than zero';
+                  }
+
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: const InputDecoration(
@@ -111,6 +126,13 @@ class _EditProductPageState extends State<EditProductScreen> {
                     price: _editedProduct.price,
                     imageUrl: _editedProduct.imageUrl,
                   );
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a descriprion';
+                  }
+
+                  return null;
                 },
               ),
               Row(
@@ -130,7 +152,9 @@ class _EditProductPageState extends State<EditProductScreen> {
                       ),
                     ),
                     child: _imageUrlController.text.isEmpty
-                        ? const Text('Enter URL')
+                        ? const Text(
+                            'Enter URL',
+                          )
                         : FittedBox(
                             child: Image.network(
                               _imageUrlController.text,
@@ -156,6 +180,18 @@ class _EditProductPageState extends State<EditProductScreen> {
                           imageUrl: value!,
                         );
                       },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter as image URL';
+                        }
+
+                        if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
+                          return 'Please enter a valid URL';
+                        }
+
+                        return null;
+                      },
                     ),
                   )
                 ],
@@ -163,22 +199,23 @@ class _EditProductPageState extends State<EditProductScreen> {
               Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: ElevatedButton(
-                    onPressed: _saveForm,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.save,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Save',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )),
+                  onPressed: _saveForm,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.save,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Save',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
               )
             ],
           ),
