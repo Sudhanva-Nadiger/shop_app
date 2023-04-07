@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/models/product.dart';
+// ignore: library_prefixes
+import 'package:shop_app/providers/products_provider.dart' as Product_Provider;
 
 class EditProductScreen extends StatefulWidget {
   const EditProductScreen({super.key});
@@ -37,6 +40,7 @@ class _EditProductPageState extends State<EditProductScreen> {
       return;
     }
     _form.currentState?.save();
+    Provider.of<Product_Provider.Products>(context).addProduct(_editedProduct);
   }
 
   @override
