@@ -72,12 +72,15 @@ class _EditProductPageState extends State<EditProductScreen> {
       return;
     }
     _form.currentState?.save();
-    if (_editedProduct.id.isEmpty) {
-      Provider.of<Product_Provider.Products>(context)
+    if (_editedProduct.id.isNotEmpty) {
+      Provider.of<Product_Provider.Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
       return;
     }
-    Provider.of<Product_Provider.Products>(context).addProduct(_editedProduct);
+    Provider.of<Product_Provider.Products>(context, listen: false)
+        .addProduct(_editedProduct);
+    _form.currentState?.reset();
+    _imageUrlController.text = '';
   }
 
   @override
