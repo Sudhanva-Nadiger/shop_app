@@ -66,7 +66,7 @@ class Products with ChangeNotifier {
   Future<void> addProduct(Product product) async {
     final url = Uri.parse(
         'https://shop-app-79ae8-default-rtdb.firebaseio.com/products.json');
-    await http
+    return await http
         .post(
       url,
       body: json.encode(
@@ -79,18 +79,23 @@ class Products with ChangeNotifier {
         },
       ),
     )
-        .then((response) {
-      final newProduct = Product(
-        id: json.decode(response.body)['name'],
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        imageUrl: product.imageUrl,
-      );
-      _items.insert(0, newProduct);
-    });
-
-    notifyListeners();
+        .then(
+      (response) {
+        final newProduct = Product(
+          id: json.decode(response.body)['name'],
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          imageUrl: product.imageUrl,
+        );
+        _items.insert(0, newProduct);
+        notifyListeners();
+      },
+    ).catchError(
+      (error) {
+        throw error;
+      },
+    );
   }
 
   updateProduct(String id, Product newProduct) {
